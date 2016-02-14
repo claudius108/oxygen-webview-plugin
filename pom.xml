@@ -161,7 +161,7 @@
 					</execution>
 					<execution>
 						<id>deploy-plugin-jar-to-oxygen-home</id>
-						<phase>prepare-package</phase>
+						<phase>package</phase>
 						<goals>
 							<goal>copy-resources</goal>
 						</goals>

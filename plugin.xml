@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plugin SYSTEM "../plugin.dtd">
+<plugin
+    id="ro.kuberam.oxygen.webview.plugin"
+    name="Webview Plugin"
+    description="Render web resources by using JavaFX"
+    version="${project.version}.${timestamp}"
+    vendor="kuberam.ro"
+    class="ro.kuberam.oxygen.webview.WebViewPlugin"
+    classLoaderType="preferReferencedResources">
+    <runtime>
+        <library name="lib/addon-builder.jar" />
+    </runtime>
+    <extension type="WorkspaceAccess" class="ro.kuberam.oxygen.webview.WebViewPluginExtension" />
+</plugin>

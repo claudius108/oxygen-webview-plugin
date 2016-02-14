@@ -17,14 +17,6 @@
 		<maven.build.timestamp.format>MMddHHmm</maven.build.timestamp.format>
 	</properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>ro.kuberam.oxygen</groupId>
-			<artifactId>addon-builder</artifactId>
-			<version>0.15</version>
-		</dependency>
-	</dependencies>
-
 	<build>
 		<finalName>${project.artifactId}</finalName>
 		<extensions>
@@ -35,6 +27,14 @@
 		</extensions>
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.3</version>
+					<configuration>
+						<source>${java-version}</source>
+						<target>${java-version}</target>
+					</configuration>
+				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>wagon-maven-plugin</artifactId>

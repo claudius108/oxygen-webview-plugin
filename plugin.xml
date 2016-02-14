@@ -7,9 +7,9 @@
     version="${project.version}.${timestamp}"
     vendor="kuberam.ro"
     class="ro.kuberam.oxygen.webview.WebViewPlugin"
-    classLoaderType="preferReferencedResources">
+    classLoaderType="preferOxygenResources">
     <runtime>
-        <library name="lib/addon-builder.jar" />
+        <library name="${oxygenInstallDir}/jre/lib/jfxrt.jar" />
     </runtime>
     <extension type="WorkspaceAccess" class="ro.kuberam.oxygen.webview.WebViewPluginExtension" />
 </plugin>

@@ -15,7 +15,23 @@
 		<addon-location>http://claudius108.users.sourceforge.net/repos/${project.artifactId}/${project.artifactId}.jar</addon-location>
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>MMddHHmm</maven.build.timestamp.format>
+		<oxygen.sdk.version>17.1.0.2</oxygen.sdk.version>
 	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.oxygenxml</groupId>
+			<artifactId>oxygen-sdk</artifactId>
+			<version>${oxygen.sdk.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
@@ -81,72 +97,72 @@
 					</execution>
 				</executions>
 			</plugin>
-<!-- 			<plugin> -->
-<!-- 				<artifactId>maven-assembly-plugin</artifactId> -->
-<!-- 				<version>2.4.1</version> -->
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-<!-- 						<id>make-addon-jar</id> -->
-<!-- 						<phase>package</phase> -->
-<!-- 						<goals> -->
-<!-- 							<goal>single</goal> -->
-<!-- 						</goals> -->
-<!-- 						<configuration> -->
-<!-- 							<finalName>${project.artifactId}</finalName> -->
-<!-- 							<appendAssemblyId>false</appendAssemblyId> -->
-<!-- 							<descriptors> -->
-<!-- 								<descriptor>assembly.xml</descriptor> -->
-<!-- 							</descriptors> -->
-<!-- 						</configuration> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
-<!-- 			</plugin> -->
-<!-- 			<plugin> -->
-<!-- 				<groupId>org.apache.maven.plugins</groupId> -->
-<!-- 				<artifactId>maven-jarsigner-plugin</artifactId> -->
-<!-- 				<version>1.2</version> -->
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-<!-- 						<id>sign</id> -->
-<!-- 						<phase>package</phase> -->
-<!-- 						<goals> -->
-<!-- 							<goal>sign</goal> -->
-<!-- 						</goals> -->
-<!-- 						<configuration> -->
-<!-- 							<keystore>${basedir}/cryptographic-materials/oxygen-addon-builder.jks</keystore> -->
-<!-- 							<alias>oxygen-addon-builder</alias> -->
-<!-- 							<storepass>oxygen</storepass> -->
-<!-- 							<keypass>oxygen</keypass> -->
-<!-- 						</configuration> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
-<!-- 			</plugin> -->
-<!-- 			<plugin> -->
-<!-- 				<groupId>org.codehaus.mojo</groupId> -->
-<!-- 				<artifactId>wagon-maven-plugin</artifactId> -->
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-<!-- 						<id>publish-project-archive-to-frs</id> -->
-<!-- 						<phase>package</phase> -->
-<!-- 						<goals> -->
-<!-- 							<goal>upload-single</goal> -->
-<!-- 						</goals> -->
-<!-- 						<configuration> -->
-<!-- 							<fromFile>${project.build.directory}/${project.artifactId}.jar</fromFile> -->
-<!-- 						</configuration> -->
-<!-- 					</execution> -->
-<!-- 					<execution> -->
-<!-- 						<id>publish-project-descriptor-to-repo</id> -->
-<!-- 						<phase>package</phase> -->
-<!-- 						<goals> -->
-<!-- 							<goal>upload-single</goal> -->
-<!-- 						</goals> -->
-<!-- 						<configuration> -->
-<!-- 							<fromFile>${project.build.directory}/addon.xml</fromFile> -->
-<!-- 						</configuration> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
-<!-- 			</plugin> -->
+			<!-- <plugin> -->
+			<!-- <artifactId>maven-assembly-plugin</artifactId> -->
+			<!-- <version>2.4.1</version> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <id>make-addon-jar</id> -->
+			<!-- <phase>package</phase> -->
+			<!-- <goals> -->
+			<!-- <goal>single</goal> -->
+			<!-- </goals> -->
+			<!-- <configuration> -->
+			<!-- <finalName>${project.artifactId}</finalName> -->
+			<!-- <appendAssemblyId>false</appendAssemblyId> -->
+			<!-- <descriptors> -->
+			<!-- <descriptor>assembly.xml</descriptor> -->
+			<!-- </descriptors> -->
+			<!-- </configuration> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
+			<!-- <plugin> -->
+			<!-- <groupId>org.apache.maven.plugins</groupId> -->
+			<!-- <artifactId>maven-jarsigner-plugin</artifactId> -->
+			<!-- <version>1.2</version> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <id>sign</id> -->
+			<!-- <phase>package</phase> -->
+			<!-- <goals> -->
+			<!-- <goal>sign</goal> -->
+			<!-- </goals> -->
+			<!-- <configuration> -->
+			<!-- <keystore>${basedir}/cryptographic-materials/oxygen-addon-builder.jks</keystore> -->
+			<!-- <alias>oxygen-addon-builder</alias> -->
+			<!-- <storepass>oxygen</storepass> -->
+			<!-- <keypass>oxygen</keypass> -->
+			<!-- </configuration> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
+			<!-- <plugin> -->
+			<!-- <groupId>org.codehaus.mojo</groupId> -->
+			<!-- <artifactId>wagon-maven-plugin</artifactId> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <id>publish-project-archive-to-frs</id> -->
+			<!-- <phase>package</phase> -->
+			<!-- <goals> -->
+			<!-- <goal>upload-single</goal> -->
+			<!-- </goals> -->
+			<!-- <configuration> -->
+			<!-- <fromFile>${project.build.directory}/${project.artifactId}.jar</fromFile> -->
+			<!-- </configuration> -->
+			<!-- </execution> -->
+			<!-- <execution> -->
+			<!-- <id>publish-project-descriptor-to-repo</id> -->
+			<!-- <phase>package</phase> -->
+			<!-- <goals> -->
+			<!-- <goal>upload-single</goal> -->
+			<!-- </goals> -->
+			<!-- <configuration> -->
+			<!-- <fromFile>${project.build.directory}/addon.xml</fromFile> -->
+			<!-- </configuration> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
 		</plugins>
 	</build>
 

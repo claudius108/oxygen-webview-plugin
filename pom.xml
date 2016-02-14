@@ -221,32 +221,32 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- <plugin> -->
-			<!-- <groupId>org.codehaus.mojo</groupId> -->
-			<!-- <artifactId>wagon-maven-plugin</artifactId> -->
-			<!-- <executions> -->
-			<!-- <execution> -->
-			<!-- <id>publish-project-archive-to-frs</id> -->
-			<!-- <phase>package</phase> -->
-			<!-- <goals> -->
-			<!-- <goal>upload-single</goal> -->
-			<!-- </goals> -->
-			<!-- <configuration> -->
-			<!-- <fromFile>${project.build.directory}/${project.artifactId}.jar</fromFile> -->
-			<!-- </configuration> -->
-			<!-- </execution> -->
-			<!-- <execution> -->
-			<!-- <id>publish-project-descriptor-to-repo</id> -->
-			<!-- <phase>package</phase> -->
-			<!-- <goals> -->
-			<!-- <goal>upload-single</goal> -->
-			<!-- </goals> -->
-			<!-- <configuration> -->
-			<!-- <fromFile>${project.build.directory}/addon.xml</fromFile> -->
-			<!-- </configuration> -->
-			<!-- </execution> -->
-			<!-- </executions> -->
-			<!-- </plugin> -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>wagon-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>publish-project-archive-to-frs</id>
+						<phase>install</phase>
+						<goals>
+							<goal>upload-single</goal>
+						</goals>
+						<configuration>
+							<fromFile>${project.build.directory}/oxygen-${project.artifactId}.jar</fromFile>
+						</configuration>
+					</execution>
+					<execution>
+						<id>publish-project-descriptor-to-repo</id>
+						<phase>install</phase>
+						<goals>
+							<goal>upload-single</goal>
+						</goals>
+						<configuration>
+							<fromFile>${project.build.directory}/addon.xml</fromFile>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 

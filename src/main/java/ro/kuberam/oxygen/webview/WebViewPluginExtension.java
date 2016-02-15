@@ -128,8 +128,6 @@ public class WebViewPluginExtension implements WorkspaceAccessPluginExtension {
 									newItem.setActionCommand("File/File_Open_URL_In_Web_View");
 									logger.debug("newItem command = "
 											+ pluginWorkspaceAccess.getOxygenActionID(newItem.getAction()));
-
-									continue;
 								}
 
 								if (oxygenActionID.equals("Help/Help")) {
@@ -142,8 +140,6 @@ public class WebViewPluginExtension implements WorkspaceAccessPluginExtension {
 									item.addActionListener(helpActionListener);
 									item.setText("Help");
 									item.setActionCommand("Help/Help");
-
-									continue;
 								}
 							}
 						}

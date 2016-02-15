@@ -83,30 +83,30 @@ public class SimpleSwingBrowser extends JFrame {
  
                 WebView view = new WebView();
                 engine = view.getEngine();
+// 
+//                engine.titleProperty().addListener(new ChangeListener<String>() {
+//                    @Override
+//                    public void changed(ObservableValue<? extends String> observable, String oldValue, final String newValue) {
+//                        SwingUtilities.invokeLater(new Runnable() {
+//                            @Override 
+//                            public void run() {
+//                                SimpleSwingBrowser.this.setTitle(newValue);
+//                            }
+//                        });
+//                    }
+//                });
  
-                engine.titleProperty().addListener(new ChangeListener<String>() {
-                    @Override
-                    public void changed(ObservableValue<? extends String> observable, String oldValue, final String newValue) {
-                        SwingUtilities.invokeLater(new Runnable() {
-                            @Override 
-                            public void run() {
-                                SimpleSwingBrowser.this.setTitle(newValue);
-                            }
-                        });
-                    }
-                });
- 
-                engine.setOnStatusChanged(new EventHandler<WebEvent<String>>() {
-                    @Override 
-                    public void handle(final WebEvent<String> event) {
-                        SwingUtilities.invokeLater(new Runnable() {
-                            @Override 
-                            public void run() {
-                                lblStatus.setText(event.getData());
-                            }
-                        });
-                    }
-                });
+//                engine.setOnStatusChanged(new EventHandler<WebEvent<String>>() {
+//                    @Override 
+//                    public void handle(final WebEvent<String> event) {
+//                        SwingUtilities.invokeLater(new Runnable() {
+//                            @Override 
+//                            public void run() {
+//                                lblStatus.setText(event.getData());
+//                            }
+//                        });
+//                    }
+//                });
  
                 engine.locationProperty().addListener(new ChangeListener<String>() {
                     @Override
@@ -120,17 +120,17 @@ public class SimpleSwingBrowser extends JFrame {
                     }
                 });
  
-                engine.getLoadWorker().workDoneProperty().addListener(new ChangeListener<Number>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, final Number newValue) {
-                        SwingUtilities.invokeLater(new Runnable() {
-                            @Override 
-                            public void run() {
-                                progressBar.setValue(newValue.intValue());
-                            }
-                        });
-                    }
-                });
+//                engine.getLoadWorker().workDoneProperty().addListener(new ChangeListener<Number>() {
+//                    @Override
+//                    public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, final Number newValue) {
+//                        SwingUtilities.invokeLater(new Runnable() {
+//                            @Override 
+//                            public void run() {
+//                                progressBar.setValue(newValue.intValue());
+//                            }
+//                        });
+//                    }
+//                });
 
                 engine.getLoadWorker()
                         .exceptionProperty()
@@ -189,7 +189,7 @@ public class SimpleSwingBrowser extends JFrame {
             public void run() {
                 SimpleSwingBrowser browser = new SimpleSwingBrowser();
                 browser.setVisible(true);
-                browser.loadURL("https://www.youtube.com/watch?v=E2LM3ZlcDnk");
+                browser.loadURL("https://www.youtube.com/watch?v=l153UtpCKEI");
            }     
        });
     }

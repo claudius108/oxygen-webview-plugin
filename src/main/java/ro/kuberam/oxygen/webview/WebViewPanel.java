@@ -12,6 +12,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.JFXPanel;
+import javafx.print.PrinterJob;
 import javafx.scene.Scene;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -22,7 +23,7 @@ public class WebViewPanel extends JFXPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = -4394124410059449821L;
-	private WebEngine engine;
+	private WebEngine webEngine;
 
 	public WebViewPanel() {
 		super();
@@ -38,18 +39,18 @@ public class WebViewPanel extends JFXPanel {
 			public void run() {
 
 				WebView view = new WebView();
-				engine = view.getEngine();
+				webEngine = view.getEngine();
 
-				engine.getLoadWorker().exceptionProperty().addListener(new ChangeListener<Throwable>() {
+				webEngine.getLoadWorker().exceptionProperty().addListener(new ChangeListener<Throwable>() {
 
 					public void changed(ObservableValue<? extends Throwable> o, Throwable old, final Throwable value) {
-						if (engine.getLoadWorker().getState() == FAILED) {
+						if (webEngine.getLoadWorker().getState() == FAILED) {
 							SwingUtilities.invokeLater(new Runnable() {
 								@Override
 								public void run() {
 									JOptionPane.showMessageDialog(panel,
-											(value != null) ? engine.getLocation() + "\n" + value.getMessage()
-													: engine.getLocation() + "\nUnexpected error.",
+											(value != null) ? webEngine.getLocation() + "\n" + value.getMessage()
+													: webEngine.getLocation() + "\nUnexpected error.",
 											"Loading error...", JOptionPane.ERROR_MESSAGE);
 								}
 							});
@@ -58,6 +59,12 @@ public class WebViewPanel extends JFXPanel {
 				});
 
 				setScene(new Scene(view));
+				
+				PrinterJob job = PrinterJob.createPrinterJob();
+	            if (job != null) {
+	                webEngine.print(job);
+	                job.endJob();
+	            }
 			}
 		});
 
@@ -73,7 +80,7 @@ public class WebViewPanel extends JFXPanel {
 					tmp = toURL("http://" + url);
 				}
 
-				engine.load(tmp);
+				webEngine.load(tmp);
 			}
 		});
 	}

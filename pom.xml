@@ -142,7 +142,7 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>deploy-plugin-descriptor-to-oxygen-home</id>
+						<id>install-plugin-descriptor-to-oxygen-home</id>
 						<phase>prepare-package</phase>
 						<goals>
 							<goal>copy-resources</goal>
@@ -160,7 +160,7 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>deploy-plugin-jar-to-oxygen-home</id>
+						<id>install-plugin-jar-to-oxygen-home</id>
 						<phase>package</phase>
 						<goals>
 							<goal>copy-resources</goal>

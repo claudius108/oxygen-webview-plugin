@@ -5,5 +5,5 @@
 		key="org.eclipse.ui.externaltools.ATTR_LAUNCH_CONFIGURATION_BUILD_SCOPE"
 		value="${none}" />
 	<stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION"
-		value="C:\Program Files\Oxygen XML Author 17\oxygenAuthor.bat" />
+		value="${oxygen-author-executable}" />
 </launchConfiguration>

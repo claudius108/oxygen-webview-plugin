@@ -12,10 +12,11 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java-version>1.8</java-version>
 		<sourceforge-repo-url>sftp://claudius108@web.sourceforge.net:/home/user-web/claudius108/htdocs/repos/${project.artifactId}</sourceforge-repo-url>
-		<addon-location>http://claudius108.users.sourceforge.net/repos/${project.artifactId}/oxygen-${project.artifactId}.jar</addon-location>
+		<addon-location>https://raw.githubusercontent.com/claudius108/oxygen-addons/master/oxygen-webview-plugin/oxygen-${project.artifactId}.jar</addon-location>
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>MMddHHmm</maven.build.timestamp.format>
 		<oxygen.sdk.version>17.1.0.2</oxygen.sdk.version>
+		<github.global.server>github</github.global.server>
 	</properties>
 
 	<dependencies>
@@ -40,11 +41,19 @@
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>javafx</artifactId>
-			<version>8.0.66</version>
+			<version>8.0_72</version>
 			<systemPath>${java.home}/lib/ext/jfxrt.jar</systemPath>
 			<scope>system</scope>
 		</dependency>
 	</dependencies>
+
+	<distributionManagement>
+		<repository>
+			<id>internal.repo</id>
+			<name>Temporary Staging Repository</name>
+			<url>file://${project.build.directory}/${project.artifactId}</url>
+		</repository>
+	</distributionManagement>
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
@@ -56,6 +65,13 @@
 		</extensions>
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.8.1</version>
+					<configuration>
+						<altDeploymentRepository>internal.repo::default::file://${project.build.directory}/${project.artifactId}</altDeploymentRepository>
+					</configuration>
+				</plugin>
 				<plugin>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.3</version>
@@ -115,7 +131,7 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.2</version>
 				<configuration>
-					<outputDirectory>${project.build.directory}</outputDirectory>
+					<outputDirectory>${project.build.directory}/${project.artifactId}</outputDirectory>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -128,7 +144,7 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${project.build.directory}</outputDirectory>
+							<outputDirectory>${project.build.directory}/${project.artifactId}</outputDirectory>
 							<resources>
 								<resource>
 									<directory>${basedir}</directory>
@@ -154,6 +170,7 @@
 							<goal>single</goal>
 						</goals>
 						<configuration>
+							<outputDirectory>${project.build.directory}/${project.artifactId}</outputDirectory>
 							<finalName>oxygen-${project.artifactId}</finalName>
 							<appendAssemblyId>false</appendAssemblyId>
 							<attach>false</attach>
@@ -176,7 +193,7 @@
 							<goal>sign</goal>
 						</goals>
 						<configuration>
-							<archive>${project.build.directory}/oxygen-${project.artifactId}.jar</archive>
+							<archive>${project.build.directory}/${project.artifactId}/oxygen-${project.artifactId}.jar</archive>
 							<keystore>${basedir}/cryptographic-materials/oxygen-addon-builder.jks</keystore>
 							<alias>oxygen-addon-builder</alias>
 							<storepass>oxygen</storepass>
@@ -185,29 +202,55 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- <plugin> -->
+			<!-- <groupId>org.codehaus.mojo</groupId> -->
+			<!-- <artifactId>wagon-maven-plugin</artifactId> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <id>publish-project-archive-to-frs</id> -->
+			<!-- <phase>install</phase> -->
+			<!-- <goals> -->
+			<!-- <goal>upload-single</goal> -->
+			<!-- </goals> -->
+			<!-- <configuration> -->
+			<!-- <fromFile>${project.build.directory}/${project.artifactId}/oxygen-${project.artifactId}.jar</fromFile> -->
+			<!-- </configuration> -->
+			<!-- </execution> -->
+			<!-- <execution> -->
+			<!-- <id>publish-project-descriptor-to-repo</id> -->
+			<!-- <phase>install</phase> -->
+			<!-- <goals> -->
+			<!-- <goal>upload-single</goal> -->
+			<!-- </goals> -->
+			<!-- <configuration> -->
+			<!-- <fromFile>${project.build.directory}/${project.artifactId}/addon.xml</fromFile> -->
+			<!-- </configuration> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>wagon-maven-plugin</artifactId>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>0.11</version>
+				<configuration>
+					<message>Uploading addon '${project.artifactId}' v.
+						${project.version}</message>
+					<outputDirectory>${project.build.directory}/${project.artifactId}</outputDirectory>
+					<branch>refs/heads/master</branch>
+					<merge>true</merge>
+					<includes>
+						<include>oxygen-${project.artifactId}.jar</include>
+						<include>addon.xml</include>
+					</includes>
+					<repositoryName>oxygen-addons</repositoryName>
+					<repositoryOwner>claudius108</repositoryOwner>
+				</configuration>
 				<executions>
 					<execution>
-						<id>publish-project-archive-to-frs</id>
-						<phase>install</phase>
 						<goals>
-							<goal>upload-single</goal>
+							<goal>site</goal>
 						</goals>
-						<configuration>
-							<fromFile>${project.build.directory}/oxygen-${project.artifactId}.jar</fromFile>
-						</configuration>
-					</execution>
-					<execution>
-						<id>publish-project-descriptor-to-repo</id>
-						<phase>install</phase>
-						<goals>
-							<goal>upload-single</goal>
-						</goals>
-						<configuration>
-							<fromFile>${project.build.directory}/addon.xml</fromFile>
-						</configuration>
+						<phase>deploy</phase>
 					</execution>
 				</executions>
 			</plugin>
@@ -232,7 +275,7 @@
 									<outputDirectory>${oxygen-author-home}/plugins/${project.artifactId}</outputDirectory>
 									<resources>
 										<resource>
-											<directory>${project.build.directory}</directory>
+											<directory>${project.build.directory}/${project.artifactId}</directory>
 											<includes>
 												<include>plugin.xml</include>
 											</includes>
@@ -250,7 +293,7 @@
 									<outputDirectory>${oxygen-author-home}/plugins/${project.artifactId}/lib</outputDirectory>
 									<resources>
 										<resource>
-											<directory>${project.build.directory}</directory>
+											<directory>${project.build.directory}/${project.artifactId}</directory>
 											<includes>
 												<include>${project.artifactId}.jar</include>
 											</includes>

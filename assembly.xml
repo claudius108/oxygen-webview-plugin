@@ -13,11 +13,11 @@
 
 	<files>
 		<file>
-			<source>${project.build.directory}/${project.artifactId}/plugin.xml</source>
+			<source>${project.build.directory}/plugin.xml</source>
 			<outputDirectory>/</outputDirectory>
 		</file>
 		<file>
-			<source>${project.build.directory}/${project.artifactId}/${project.artifactId}.jar</source>
+			<source>${project.build.directory}/${project.artifactId}.jar</source>
 			<outputDirectory>/lib</outputDirectory>
 		</file>
 	</files>

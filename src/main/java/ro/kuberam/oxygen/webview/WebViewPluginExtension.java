@@ -4,10 +4,8 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Iterator;
 
 import javax.swing.Action;
 import javax.swing.JMenu;
@@ -53,14 +51,18 @@ public class WebViewPluginExtension implements WorkspaceAccessPluginExtension {
 					newEditor.setEditorTabText(urlToOpenAsString);
 					newEditor.changePage(EditorPageConstants.PAGE_TEXT);
 					logger.debug("getCurrentPageID = " + newEditor.getCurrentPageID());
+					logger.debug("getCurrentPageID 2 = " + newEditor.getCurrentPageID());
 
 					WSTextEditorPage basePage = (WSTextEditorPage) newEditor.getCurrentPage();
+					logger.debug("getCurrentPageID 3 = " + newEditor.getCurrentPageID());
+					logger.debug("basePage = " + basePage.getClass().getName());
+					
 					JTextArea textArea = (JTextArea) basePage.getTextComponent();
 					int width = textArea.getWidth();
 					logger.debug("width = " + width);
 					int height = textArea.getHeight();
 					logger.debug("height = " + height);
-
+					
 					Container parent = textArea.getParent();
 					parent.remove(textArea);
 
@@ -156,3 +158,8 @@ public class WebViewPluginExtension implements WorkspaceAccessPluginExtension {
 		return true;
 	}
 }
+
+//WSEditorBase has save()
+//WSEditor extends WSEditorBase
+// ====WSTextEditorPage extends WSTextBasedEditorPage
+// WSTextBasedEditorPages extends WSEditorPage

@@ -11,7 +11,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java-version>1.8</java-version>
-		<sourceforge-repo-url>sftp://claudius108@web.sourceforge.net:/home/user-web/claudius108/htdocs/repos/${project.artifactId}</sourceforge-repo-url>
 		<addon-location>https://raw.githubusercontent.com/claudius108/oxygen-addons/master/oxygen-webview-plugin/oxygen-${project.artifactId}.jar</addon-location>
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>MMddHHmm</maven.build.timestamp.format>
@@ -71,15 +70,6 @@
 					<configuration>
 						<source>${java-version}</source>
 						<target>${java-version}</target>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>wagon-maven-plugin</artifactId>
-					<version>1.0</version>
-					<configuration>
-						<serverId>sourceforge</serverId>
-						<url>${sourceforge-repo-url}</url>
 					</configuration>
 				</plugin>
 				<plugin>

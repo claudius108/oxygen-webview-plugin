@@ -30,79 +30,27 @@ public class WebViewPluginExtension implements WorkspaceAccessPluginExtension {
 
 	private static final Logger logger = Logger.getLogger(WebViewPluginExtension.class.getName());
 
-	private Action openUrlInWebWebViewAction = null;
-
 	public WebViewPluginExtension() {
 	}
 
 	@Override
 	public void applicationStarted(final StandalonePluginWorkspace pluginWorkspaceAccess) {
 
+		ActionListener helpActionListener = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				createNewEditor(pluginWorkspaceAccess,
+						"https://www.oxygenxml.com/doc/versions/17.1/ug-author/#introduction.html#introduction");
+			}
+		};
+
 		ActionListener openUrlInWebWebViewActionListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					URL urlToOpen = pluginWorkspaceAccess.chooseURL("Open URL in WebView", null, null);
-					String urlToOpenAsString = urlToOpen.toURI().toASCIIString();
-
-					pluginWorkspaceAccess.createNewEditor("text", "text/plain", "");
-
-					WSEditor newEditor = pluginWorkspaceAccess
-							.getCurrentEditorAccess(PluginWorkspace.MAIN_EDITING_AREA);
-					newEditor.setEditorTabText(urlToOpenAsString);
-					newEditor.changePage(EditorPageConstants.PAGE_TEXT);
-					logger.debug("getCurrentPageID = " + newEditor.getCurrentPageID());
-					logger.debug("getCurrentPageID 2 = " + newEditor.getCurrentPageID());
-
-					WSTextEditorPage basePage = (WSTextEditorPage) newEditor.getCurrentPage();
-					logger.debug("getCurrentPageID 3 = " + newEditor.getCurrentPageID());
-					logger.debug("basePage = " + basePage.getClass().getName());
-					
-					JTextArea textArea = (JTextArea) basePage.getTextComponent();
-					int width = textArea.getWidth();
-					logger.debug("width = " + width);
-					int height = textArea.getHeight();
-					logger.debug("height = " + height);
-					
-					Container parent = textArea.getParent();
-					parent.remove(textArea);
-
-					WebViewPanel panel = new WebViewPanel();
-					panel.setSize(new Dimension(width, height));
-					parent.add(panel);
-
-					panel.loadURL(urlToOpenAsString);
+					createNewEditor(pluginWorkspaceAccess, urlToOpen.toURI().toASCIIString());
 				} catch (URISyntaxException e1) {
 					e1.printStackTrace();
 				}
-			}
-		};
-
-		ActionListener helpActionListener = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String urlToOpenAsString = "https://www.oxygenxml.com/doc/versions/17.1/ug-author/#introduction.html#introduction";
-
-				pluginWorkspaceAccess.createNewEditor("text", "text/plain", "");
-
-				WSEditor newEditor = pluginWorkspaceAccess.getCurrentEditorAccess(PluginWorkspace.MAIN_EDITING_AREA);
-				newEditor.setEditorTabText(urlToOpenAsString);
-				newEditor.changePage(EditorPageConstants.PAGE_TEXT);
-				logger.debug("getCurrentPageID = " + newEditor.getCurrentPageID());
-
-				WSTextEditorPage basePage = (WSTextEditorPage) newEditor.getCurrentPage();
-				JTextArea textArea = (JTextArea) basePage.getTextComponent();
-				int width = textArea.getWidth();
-				logger.debug("width = " + width);
-				int height = textArea.getHeight();
-				logger.debug("height = " + height);
-
-				Container parent = textArea.getParent();
-				parent.remove(textArea);
-
-				WebViewPanel panel = new WebViewPanel();
-				panel.setSize(new Dimension(width, height));
-				parent.add(panel);
-
-				panel.loadURL(urlToOpenAsString);
 			}
 		};
 
@@ -157,9 +105,31 @@ public class WebViewPluginExtension implements WorkspaceAccessPluginExtension {
 	public boolean applicationClosing() {
 		return true;
 	}
-}
 
-//WSEditorBase has save()
-//WSEditor extends WSEditorBase
-// ====WSTextEditorPage extends WSTextBasedEditorPage
-// WSTextBasedEditorPages extends WSEditorPage
+	private void createNewEditor(StandalonePluginWorkspace pluginWorkspaceAccess, String urlToOpen) {
+		pluginWorkspaceAccess.createNewEditor("text", "text/plain", "");
+
+		WSEditor newEditor = pluginWorkspaceAccess.getCurrentEditorAccess(PluginWorkspace.MAIN_EDITING_AREA);
+		newEditor.setEditorTabText(urlToOpen);
+		newEditor.changePage(EditorPageConstants.PAGE_TEXT);
+		logger.debug("getCurrentPageID = " + newEditor.getCurrentPageID());
+
+		WSTextEditorPage basePage = (WSTextEditorPage) newEditor.getCurrentPage();
+		logger.debug("basePage = " + newEditor.getClass().getName());
+
+		JTextArea textArea = (JTextArea) basePage.getTextComponent();
+		int width = textArea.getWidth();
+		logger.debug("width = " + width);
+		int height = textArea.getHeight();
+		logger.debug("height = " + height);
+
+		Container parent = textArea.getParent();
+		parent.remove(textArea);
+
+		WebViewPanel panel = new WebViewPanel();
+		panel.setSize(new Dimension(width, height));
+		parent.add(panel);
+
+		panel.loadURL(urlToOpen);
+	}
+}

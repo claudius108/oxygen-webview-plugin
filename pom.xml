@@ -46,14 +46,6 @@
 		</dependency>
 	</dependencies>
 
-<!-- 	<distributionManagement> -->
-<!-- 		<repository> -->
-<!-- 			<id>internal.repo</id> -->
-<!-- 			<name>Temporary Staging Repository</name> -->
-<!-- 			<url>file://${project.build.directory}</url> -->
-<!-- 		</repository> -->
-<!-- 	</distributionManagement> -->
-
 	<build>
 		<finalName>${project.artifactId}</finalName>
 		<pluginManagement>
@@ -99,14 +91,6 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<outputDirectory>${project.build.directory}</outputDirectory>
-				</configuration>
-			</plugin>
-			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<executions>
 					<execution>
@@ -128,75 +112,6 @@
 								</resource>
 							</resources>
 						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.4.1</version>
-				<executions>
-					<execution>
-						<id>make-addon-jar</id>
-						<phase>install</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}</outputDirectory>
-							<finalName>oxygen-${project.artifactId}</finalName>
-							<appendAssemblyId>false</appendAssemblyId>
-							<attach>false</attach>
-							<descriptors>
-								<descriptor>assembly.xml</descriptor>
-							</descriptors>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jarsigner-plugin</artifactId>
-				<version>1.2</version>
-				<executions>
-					<execution>
-						<id>sign</id>
-						<phase>install</phase>
-						<goals>
-							<goal>sign</goal>
-						</goals>
-						<configuration>
-							<archive>${project.build.directory}/oxygen-${project.artifactId}.jar</archive>
-							<keystore>${basedir}/cryptographic-materials/oxygen-addon-builder.jks</keystore>
-							<alias>oxygen-addon-builder</alias>
-							<storepass>oxygen</storepass>
-							<keypass>oxygen</keypass>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>com.github.github</groupId>
-				<artifactId>site-maven-plugin</artifactId>
-				<version>0.11</version>
-				<configuration>
-					<message>'${project.artifactId}' v. ${project.version}</message>
-					<outputDirectory>${project.build.directory}</outputDirectory>
-					<branch>refs/heads/master</branch>
-					<merge>true</merge>
-					<includes>
-						<include>oxygen-${project.artifactId}.jar</include>
-						<include>addon.xml</include>
-					</includes>
-					<repositoryName>oxygen-addons</repositoryName>
-					<repositoryOwner>claudius108</repositoryOwner>
-					<path>oxygen-${project.artifactId}</path>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>site</goal>
-						</goals>
-						<phase>deploy</phase>
 					</execution>
 				</executions>
 			</plugin>
@@ -246,6 +161,90 @@
 										</resource>
 									</resources>
 								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>deploy-plugin-to-github</id>
+			<distributionManagement>
+				<repository>
+					<id>internal.repo</id>
+					<name>Temporary Staging Repository</name>
+					<url>file://${project.build.directory}</url>
+				</repository>
+			</distributionManagement>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-assembly-plugin</artifactId>
+						<version>2.4.1</version>
+						<executions>
+							<execution>
+								<id>make-addon-jar</id>
+								<phase>install</phase>
+								<goals>
+									<goal>single</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.build.directory}</outputDirectory>
+									<finalName>oxygen-${project.artifactId}</finalName>
+									<appendAssemblyId>false</appendAssemblyId>
+									<attach>false</attach>
+									<descriptors>
+										<descriptor>assembly.xml</descriptor>
+									</descriptors>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jarsigner-plugin</artifactId>
+						<version>1.2</version>
+						<executions>
+							<execution>
+								<id>sign</id>
+								<phase>install</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+								<configuration>
+									<archive>${project.build.directory}/oxygen-${project.artifactId}.jar</archive>
+									<keystore>${basedir}/cryptographic-materials/oxygen-addon-builder.jks</keystore>
+									<alias>oxygen-addon-builder</alias>
+									<storepass>oxygen</storepass>
+									<keypass>oxygen</keypass>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>com.github.github</groupId>
+						<artifactId>site-maven-plugin</artifactId>
+						<version>0.11</version>
+						<configuration>
+							<message>'${project.artifactId}' v. ${project.version}</message>
+							<outputDirectory>${project.build.directory}</outputDirectory>
+							<branch>refs/heads/master</branch>
+							<merge>true</merge>
+							<includes>
+								<include>oxygen-${project.artifactId}.jar</include>
+								<include>addon.xml</include>
+							</includes>
+							<repositoryName>oxygen-addons</repositoryName>
+							<repositoryOwner>claudius108</repositoryOwner>
+							<path>oxygen-${project.artifactId}</path>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>site</goal>
+								</goals>
+								<phase>deploy</phase>
 							</execution>
 						</executions>
 					</plugin>

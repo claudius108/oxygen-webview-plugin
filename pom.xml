@@ -128,7 +128,7 @@
 						<executions>
 							<execution>
 								<id>install-plugin-descriptor-to-oxygen-home</id>
-								<phase>prepare-package</phase>
+								<phase>package</phase>
 								<goals>
 									<goal>copy-resources</goal>
 								</goals>

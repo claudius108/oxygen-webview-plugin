@@ -185,7 +185,7 @@
 						<executions>
 							<execution>
 								<id>make-addon-jar</id>
-								<phase>install</phase>
+								<phase>package</phase>
 								<goals>
 									<goal>single</goal>
 								</goals>
@@ -208,7 +208,7 @@
 						<executions>
 							<execution>
 								<id>sign</id>
-								<phase>install</phase>
+								<phase>package</phase>
 								<goals>
 									<goal>sign</goal>
 								</goals>
@@ -226,6 +226,14 @@
 						<groupId>com.github.github</groupId>
 						<artifactId>site-maven-plugin</artifactId>
 						<version>0.11</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>site</goal>
+								</goals>
+								<phase>package</phase>
+							</execution>
+						</executions>
 						<configuration>
 							<message>'${project.artifactId}' v. ${project.version}</message>
 							<outputDirectory>${project.build.directory}</outputDirectory>
@@ -239,14 +247,6 @@
 							<repositoryOwner>claudius108</repositoryOwner>
 							<path>oxygen-${project.artifactId}</path>
 						</configuration>
-						<executions>
-							<execution>
-								<goals>
-									<goal>site</goal>
-								</goals>
-								<phase>deploy</phase>
-							</execution>
-						</executions>
 					</plugin>
 				</plugins>
 			</build>

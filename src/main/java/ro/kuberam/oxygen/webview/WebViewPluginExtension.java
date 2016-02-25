@@ -1,5 +1,6 @@
 package ro.kuberam.oxygen.webview;
 
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -8,6 +9,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import javax.swing.Action;
+import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -54,6 +56,24 @@ public class WebViewPluginExtension implements WorkspaceAccessPluginExtension {
 			}
 		};
 
+		ActionListener savePageAsActionListener = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				WSEditor newEditor = pluginWorkspaceAccess.getCurrentEditorAccess(PluginWorkspace.MAIN_EDITING_AREA);
+				WSTextEditorPage basePage = (WSTextEditorPage) newEditor.getCurrentPage();
+				JComponent component = (JComponent) newEditor.getComponent();
+				Container parent = component.getParent().getParent();
+				logger.debug("parent = " + parent.getClass().getName());
+
+				Component[] components = parent.getComponents();
+
+				for (int i = 0; i < components.length; ++i) {
+					logger.debug("component = " + components[i].getClass().getName());
+				}
+				// parent.remove(components[1]);
+
+			}
+		};
+
 		pluginWorkspaceAccess.addMenuBarCustomizer(new MenuBarCustomizer() {
 			@Override
 			public void customizeMainMenu(JMenuBar mainMenuBar) {
@@ -76,8 +96,11 @@ public class WebViewPluginExtension implements WorkspaceAccessPluginExtension {
 									menu.insert(newItem, j + 1);
 									newItem.addActionListener(openUrlInWebWebViewActionListener);
 									newItem.setActionCommand("File/File_Open_URL_In_Web_View");
-									logger.debug("newItem command = "
-											+ pluginWorkspaceAccess.getOxygenActionID(newItem.getAction()));
+
+									newItem = new JMenuItem("Save Page As");
+									menu.insert(newItem, j + 2);
+									newItem.addActionListener(savePageAsActionListener);
+									newItem.setActionCommand("File/Save_Page_As");
 								}
 
 								if (oxygenActionID.equals("Help/Help")) {
@@ -115,7 +138,7 @@ public class WebViewPluginExtension implements WorkspaceAccessPluginExtension {
 		logger.debug("getCurrentPageID = " + newEditor.getCurrentPageID());
 
 		WSTextEditorPage basePage = (WSTextEditorPage) newEditor.getCurrentPage();
-		logger.debug("basePage = " + newEditor.getClass().getName());
+		logger.debug("basePage = " + Runnable.class.getName());
 
 		JTextArea textArea = (JTextArea) basePage.getTextComponent();
 		int width = textArea.getWidth();
@@ -126,8 +149,7 @@ public class WebViewPluginExtension implements WorkspaceAccessPluginExtension {
 		Container parent = textArea.getParent();
 		parent.remove(textArea);
 
-		WebViewPanel panel = new WebViewPanel();
-		panel.setSize(new Dimension(width, height));
+		WebViewPanel panel = new WebViewPanel(width, height);
 		parent.add(panel);
 
 		panel.loadURL(urlToOpen);

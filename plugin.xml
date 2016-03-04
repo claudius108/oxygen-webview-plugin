@@ -10,6 +10,7 @@
     classLoaderType="preferOxygenResources">
     <runtime>
     	<library name="lib/${project.artifactId}.jar" />
+    	<library name="lib/controlsfx-8.40.10.jar" />
         <library name="${oxygenInstallDir}/jre/lib/jfxrt.jar" />
     </runtime>
     <extension type="WorkspaceAccess" class="ro.kuberam.oxygen.webview.WebViewPluginExtension" />

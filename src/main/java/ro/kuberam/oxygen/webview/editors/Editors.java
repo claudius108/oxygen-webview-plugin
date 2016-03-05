@@ -6,7 +6,7 @@ import javax.swing.JTextArea;
 
 import org.apache.log4j.Logger;
 
-import ro.kuberam.oxygen.webview.WebViewPanel;
+import ro.kuberam.oxygen.webview.editors.web.WebViewPanel;
 import ro.sync.exml.editor.EditorPageConstants;
 import ro.sync.exml.workspace.api.PluginWorkspace;
 import ro.sync.exml.workspace.api.editor.WSEditor;

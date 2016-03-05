@@ -1,4 +1,4 @@
-package ro.kuberam.oxygen.webview;
+package ro.kuberam.oxygen.webview.editors.html;
 
 import static javafx.concurrent.Worker.State.FAILED;
 
@@ -54,7 +54,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 
-public class WebViewPanel extends JPanel {
+public class HtmlViewPanel extends JPanel {
 
 	/**
 	 * 
@@ -65,7 +65,7 @@ public class WebViewPanel extends JPanel {
 	private int width;
 	private int height;
 
-	public WebViewPanel(int width, int height) {
+	public HtmlViewPanel(int width, int height) {
 		super();
 
 		this.width = width - 10;

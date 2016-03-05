@@ -20,6 +20,7 @@ import javax.swing.JTextArea;
 import org.apache.log4j.Logger;
 
 import javafx.embed.swing.JFXPanel;
+import ro.kuberam.oxygen.webview.editors.Editors;
 import ro.sync.exml.editor.EditorPageConstants;
 import ro.sync.exml.plugin.workspace.WorkspaceAccessPluginExtension;
 import ro.sync.exml.workspace.api.PluginWorkspace;
@@ -45,7 +46,7 @@ public class WebViewPluginExtension implements WorkspaceAccessPluginExtension {
 
 		ActionListener helpActionListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				createNewEditor(pluginWorkspaceAccess,
+				Editors.createWebEditor(pluginWorkspaceAccess,
 						"https://www.oxygenxml.com/doc/versions/17.1/ug-author/#introduction.html#introduction");
 			}
 		};
@@ -54,7 +55,7 @@ public class WebViewPluginExtension implements WorkspaceAccessPluginExtension {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					URL urlToOpen = pluginWorkspaceAccess.chooseURL("Open URL in WebView", null, null);
-					createNewEditor(pluginWorkspaceAccess, urlToOpen.toURI().toASCIIString());
+					Editors.createWebEditor(pluginWorkspaceAccess, urlToOpen.toURI().toASCIIString());
 				} catch (URISyntaxException e1) {
 					e1.printStackTrace();
 				}
@@ -139,7 +140,7 @@ public class WebViewPluginExtension implements WorkspaceAccessPluginExtension {
 
 					JFXPanel panel = new Toolbar();
 
-//					panel.setPreferredSize(new Dimension(300, 45));
+					// panel.setPreferredSize(new Dimension(300, 45));
 					comps.add(panel);
 
 					toolbarInfo.setComponents(comps.toArray(new JComponent[0]));
@@ -153,31 +154,5 @@ public class WebViewPluginExtension implements WorkspaceAccessPluginExtension {
 	@Override
 	public boolean applicationClosing() {
 		return true;
-	}
-
-	private void createNewEditor(StandalonePluginWorkspace pluginWorkspaceAccess, String urlToOpen) {
-		pluginWorkspaceAccess.createNewEditor("text", "text/plain", "");
-
-		WSEditor newEditor = pluginWorkspaceAccess.getCurrentEditorAccess(PluginWorkspace.MAIN_EDITING_AREA);
-		newEditor.setEditorTabText(urlToOpen);
-		newEditor.changePage(EditorPageConstants.PAGE_TEXT);
-		logger.debug("getCurrentPageID = " + newEditor.getCurrentPageID());
-
-		WSTextEditorPage basePage = (WSTextEditorPage) newEditor.getCurrentPage();
-		logger.debug("basePage = " + Runnable.class.getName());
-
-		JTextArea textArea = (JTextArea) basePage.getTextComponent();
-		int width = textArea.getWidth();
-		logger.debug("width = " + width);
-		int height = textArea.getHeight();
-		logger.debug("height = " + height);
-
-		Container parent = textArea.getParent();
-		parent.remove(textArea);
-
-		WebViewPanel panel = new WebViewPanel(width, height);
-		parent.add(panel);
-
-		panel.loadURL(urlToOpen);
 	}
 }

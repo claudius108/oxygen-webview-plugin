@@ -48,38 +48,30 @@ public class Toolbar extends JFXPanel {
 
 		Button newFileButton = new Button();
 		newFileButton.setGraphic(getIcon("FileView.fileIcon"));
-		newFileButton.setTooltip(new Tooltip("Save Page As"));
+		newFileButton.setTooltip(new Tooltip("New File"));
 		newFileButton.getStyleClass().addAll("first");
 		newFileButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				FileChooser fileChooser = new FileChooser();
-
-				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Web Page, HTML only",
-						"*.html");
-				fileChooser.getExtensionFilters().add(extFilter);
-
-				File file = fileChooser.showSaveDialog(null);
 			}
 		});
 
 		Button openFileButton = new Button();
-		openFileButton.setGraphic(getIcon("FileView.fileIcon"));
-		openFileButton.setTooltip(new Tooltip("Save Page As"));
+		openFileButton.setGraphic(getIcon("Tree.openIcon"));
+		openFileButton.setTooltip(new Tooltip("Open File"));
 		openFileButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				FileChooser fileChooser = new FileChooser();
 
-				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Web Page, HTML only",
-						"*.html");
+				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("HTML", "*.html");
 				fileChooser.getExtensionFilters().add(extFilter);
 
-				File file = fileChooser.showSaveDialog(null);
+				File file = fileChooser.showOpenDialog(null);
 			}
 		});
 
-		buttonBar.getChildren().addAll(openFileButton);
+		buttonBar.getChildren().addAll(newFileButton, openFileButton);
 		toolBar.getItems().addAll(spacer, buttonBar);
 
 		VBox layout = new VBox(10, toolBar);
@@ -91,7 +83,7 @@ public class Toolbar extends JFXPanel {
 	}
 
 	private Node getIcon(String string) {
-		ImageIcon icon = (ImageIcon) UIManager.getIcon("FileView.fileIcon");
+		ImageIcon icon = (ImageIcon) UIManager.getIcon(string);
 		BufferedImage bufferedImage = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(),
 				BufferedImage.TYPE_INT_ARGB);
 		icon.paintIcon(null, bufferedImage.getGraphics(), 0, 0);

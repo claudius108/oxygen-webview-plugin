@@ -2,10 +2,13 @@ package ro.kuberam.oxygen.webview;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.Action;
 import javax.swing.JComponent;
@@ -16,6 +19,7 @@ import javax.swing.JTextArea;
 
 import org.apache.log4j.Logger;
 
+import javafx.embed.swing.JFXPanel;
 import ro.sync.exml.editor.EditorPageConstants;
 import ro.sync.exml.plugin.workspace.WorkspaceAccessPluginExtension;
 import ro.sync.exml.workspace.api.PluginWorkspace;
@@ -23,6 +27,8 @@ import ro.sync.exml.workspace.api.editor.WSEditor;
 import ro.sync.exml.workspace.api.editor.page.text.WSTextEditorPage;
 import ro.sync.exml.workspace.api.standalone.MenuBarCustomizer;
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
+import ro.sync.exml.workspace.api.standalone.ToolbarComponentsCustomizer;
+import ro.sync.exml.workspace.api.standalone.ToolbarInfo;
 
 /**
  * Plugin extension - dlri extension.
@@ -119,6 +125,27 @@ public class WebViewPluginExtension implements WorkspaceAccessPluginExtension {
 				}
 
 				// mainMenuBar.removeAll();
+			}
+		});
+
+		// add plugin's toolbar
+		pluginWorkspaceAccess.addToolbarComponentsCustomizer(new ToolbarComponentsCustomizer() {
+			public void customizeToolbar(final ToolbarInfo toolbarInfo) {
+
+				String toolbarId = toolbarInfo.getToolbarID();
+
+				if (toolbarId.equals("WebViewToolbar")) {
+					List<JComponent> comps = new ArrayList<JComponent>();
+
+					JFXPanel panel = new Toolbar();
+
+//					panel.setPreferredSize(new Dimension(300, 45));
+					comps.add(panel);
+
+					toolbarInfo.setComponents(comps.toArray(new JComponent[0]));
+
+					toolbarInfo.setTitle("WebView Toolbar");
+				}
 			}
 		});
 	}

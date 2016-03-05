@@ -47,7 +47,7 @@ public class Toolbar extends JFXPanel {
 		buttonBar.getStyleClass().setAll("segmented-button-bar");
 
 		Button newFileButton = new Button();
-		newFileButton.setGraphic(getIcon("FileView.fileIcon"));
+		newFileButton.setGraphic(Utils.getIcon("FileView.fileIcon"));
 		newFileButton.setTooltip(new Tooltip("New File"));
 		newFileButton.getStyleClass().addAll("first");
 		newFileButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -57,7 +57,7 @@ public class Toolbar extends JFXPanel {
 		});
 
 		Button openFileButton = new Button();
-		openFileButton.setGraphic(getIcon("Tree.openIcon"));
+		openFileButton.setGraphic(Utils.getIcon("Tree.openIcon"));
 		openFileButton.setTooltip(new Tooltip("Open File"));
 		openFileButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -80,15 +80,5 @@ public class Toolbar extends JFXPanel {
 		Scene scene = new Scene(layout);
 
 		setScene(scene);
-	}
-
-	private Node getIcon(String string) {
-		ImageIcon icon = (ImageIcon) UIManager.getIcon(string);
-		BufferedImage bufferedImage = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(),
-				BufferedImage.TYPE_INT_ARGB);
-		icon.paintIcon(null, bufferedImage.getGraphics(), 0, 0);
-		Image picture = SwingFXUtils.toFXImage(bufferedImage, null);
-
-		return new ImageView(picture);
 	}
 }

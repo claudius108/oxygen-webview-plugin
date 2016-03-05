@@ -53,6 +53,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
+import ro.kuberam.oxygen.webview.Utils;
 
 public class WebViewPanel extends JPanel {
 
@@ -108,12 +109,7 @@ public class WebViewPanel extends JPanel {
 		});
 
 		Button savePageAsButton = new Button();
-		ImageIcon icon = (ImageIcon) UIManager.getIcon("FileView.floppyDriveIcon");
-		BufferedImage bufferedImage = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(),
-				BufferedImage.TYPE_INT_ARGB);
-		icon.paintIcon(null, bufferedImage.getGraphics(), 0, 0);
-		Image picture = SwingFXUtils.toFXImage(bufferedImage, null);
-		savePageAsButton.setGraphic(new ImageView(picture));
+		savePageAsButton.setGraphic(Utils.getIcon("FileView.floppyDriveIcon"));
 		savePageAsButton.setTooltip(new Tooltip("Save Page As"));
 		savePageAsButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override

@@ -179,7 +179,7 @@
 		</profile>
 
 		<profile>
-			<id>deploy-plugin-to-github</id>
+			<id>deploy-plugin</id>
 			<distributionManagement>
 				<repository>
 					<id>internal.repo</id>

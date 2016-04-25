@@ -5,7 +5,7 @@
 
 	<groupId>ro.kuberam.oxygen</groupId>
 	<artifactId>webview-plugin</artifactId>
-	<version>0.4</version>
+	<version>0.5</version>
 	<packaging>jar</packaging>
 
 	<prerequisites>
@@ -250,6 +250,7 @@
 							</execution>
 						</executions>
 						<configuration>
+							<server>github</server>
 							<message>'${project.artifactId}' v. ${project.version}</message>
 							<outputDirectory>${project.build.directory}</outputDirectory>
 							<branch>refs/heads/master</branch>

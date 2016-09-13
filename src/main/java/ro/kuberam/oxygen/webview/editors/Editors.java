@@ -1,11 +1,13 @@
 package ro.kuberam.oxygen.webview.editors;
 
 import java.awt.Container;
+import java.io.File;
 
 import javax.swing.JTextArea;
 
 import org.apache.log4j.Logger;
 
+import ro.kuberam.oxygen.webview.editors.html.HtmlViewPanel;
 import ro.kuberam.oxygen.webview.editors.web.WebViewPanel;
 import ro.sync.exml.editor.EditorPageConstants;
 import ro.sync.exml.workspace.api.PluginWorkspace;
@@ -42,12 +44,12 @@ public class Editors {
 
 		panel.loadURL(urlToOpen);
 	}
-	
-	public static void createHtmlEditor(StandalonePluginWorkspace pluginWorkspaceAccess, String urlToOpen) {
+
+	public static void createHtmlEditor(StandalonePluginWorkspace pluginWorkspaceAccess, String content, File file) {
 		pluginWorkspaceAccess.createNewEditor("text", "text/plain", "");
 
 		WSEditor newEditor = pluginWorkspaceAccess.getCurrentEditorAccess(PluginWorkspace.MAIN_EDITING_AREA);
-		newEditor.setEditorTabText(urlToOpen);
+		newEditor.setEditorTabText(file.getName());
 		newEditor.changePage(EditorPageConstants.PAGE_TEXT);
 		logger.debug("getCurrentPageID = " + newEditor.getCurrentPageID());
 
@@ -63,10 +65,8 @@ public class Editors {
 		Container parent = textArea.getParent();
 		parent.remove(textArea);
 
-		WebViewPanel panel = new WebViewPanel(width, height);
+		HtmlViewPanel panel = new HtmlViewPanel(file, content, width, height);
 		parent.add(panel);
-
-		panel.loadURL(urlToOpen);
 	}
 
 }

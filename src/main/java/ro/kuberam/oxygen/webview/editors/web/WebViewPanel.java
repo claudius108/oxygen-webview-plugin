@@ -2,24 +2,18 @@ package ro.kuberam.oxygen.webview.editors.web;
 
 import static javafx.concurrent.Worker.State.FAILED;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -31,9 +25,7 @@ import org.w3c.dom.Document;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Worker.State;
 import javafx.embed.swing.JFXPanel;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -43,8 +35,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -108,8 +98,8 @@ public class WebViewPanel extends JPanel {
 			}
 		});
 
-		Button savePageAsButton = new Button();
-		savePageAsButton.setGraphic(Utils.getIcon("FileView.floppyDriveIcon"));
+		Button savePageAsButton = new Button("Save");
+		// savePageAsButton.setGraphic(Utils.getIcon("FileView.floppyDriveIcon"));
 		savePageAsButton.setTooltip(new Tooltip("Save Page As"));
 		savePageAsButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -136,13 +126,13 @@ public class WebViewPanel extends JPanel {
 				}
 
 				FileChooser fileChooser = new FileChooser();
-				Path fileName = Paths.get(webEngine.getLocation());
+				Path filePath = Paths.get(webEngine.getLocation());
 
 				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Web Page, HTML only",
 						"*.html");
 				fileChooser.getExtensionFilters().add(extFilter);
 
-				fileChooser.setInitialFileName(fileName.getFileName().toString());
+				fileChooser.setInitialFileName(filePath.getFileName().toString());
 
 				File file = fileChooser.showSaveDialog(null);
 
@@ -161,7 +151,8 @@ public class WebViewPanel extends JPanel {
 			}
 		});
 
-		Button printButton = new Button("\uD83D\uDDB6");
+		Button printButton = new Button("Print");
+		// Button printButton = new Button("\uD83D\uDDB6");
 		printButton.setTooltip(new Tooltip("Print"));
 		printButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override

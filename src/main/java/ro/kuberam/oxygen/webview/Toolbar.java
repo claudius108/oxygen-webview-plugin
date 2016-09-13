@@ -2,9 +2,12 @@ package ro.kuberam.oxygen.webview;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
+
+import org.apache.commons.io.FileUtils;
 
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -23,6 +26,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import ro.kuberam.oxygen.webview.editors.Editors;
+import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
 public class Toolbar extends JFXPanel {
 
@@ -30,8 +35,11 @@ public class Toolbar extends JFXPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 6846419571589812272L;
+	private StandalonePluginWorkspace pluginWorkspaceAccess;
 
-	public Toolbar() {
+	public Toolbar(StandalonePluginWorkspace pluginWorkspaceAccess) {
+		this.pluginWorkspaceAccess = pluginWorkspaceAccess;
+
 		Platform.runLater(() -> {
 			createToolbar();
 		});
@@ -46,8 +54,8 @@ public class Toolbar extends JFXPanel {
 		HBox buttonBar = new HBox();
 		buttonBar.getStyleClass().setAll("segmented-button-bar");
 
-		Button newFileButton = new Button();
-		newFileButton.setGraphic(Utils.getIcon("FileView.fileIcon"));
+		Button newFileButton = new Button("New");
+//		newFileButton.setGraphic(Utils.getIcon("FileView.fileIcon"));
 		newFileButton.setTooltip(new Tooltip("New File"));
 		newFileButton.getStyleClass().addAll("first");
 		newFileButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -56,8 +64,8 @@ public class Toolbar extends JFXPanel {
 			}
 		});
 
-		Button openFileButton = new Button();
-		openFileButton.setGraphic(Utils.getIcon("Tree.openIcon"));
+		Button openFileButton = new Button("Open");
+//		openFileButton.setGraphic(Utils.getIcon("Tree.openIcon"));
 		openFileButton.setTooltip(new Tooltip("Open File"));
 		openFileButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -68,6 +76,14 @@ public class Toolbar extends JFXPanel {
 				fileChooser.getExtensionFilters().add(extFilter);
 
 				File file = fileChooser.showOpenDialog(null);
+				String fileContent = null;
+				try {
+					fileContent = FileUtils.readFileToString(file, "UTF-8");
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+
+				Editors.createHtmlEditor(pluginWorkspaceAccess, fileContent, file);
 			}
 		});
 

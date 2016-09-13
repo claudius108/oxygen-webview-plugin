@@ -2,7 +2,6 @@ package ro.kuberam.oxygen.webview;
 
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URISyntaxException;
@@ -15,13 +14,11 @@ import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JTextArea;
 
 import org.apache.log4j.Logger;
 
 import javafx.embed.swing.JFXPanel;
 import ro.kuberam.oxygen.webview.editors.Editors;
-import ro.sync.exml.editor.EditorPageConstants;
 import ro.sync.exml.plugin.workspace.WorkspaceAccessPluginExtension;
 import ro.sync.exml.workspace.api.PluginWorkspace;
 import ro.sync.exml.workspace.api.editor.WSEditor;
@@ -129,7 +126,6 @@ public class WebViewPluginExtension implements WorkspaceAccessPluginExtension {
 			}
 		});
 
-		// add plugin's toolbar
 		pluginWorkspaceAccess.addToolbarComponentsCustomizer(new ToolbarComponentsCustomizer() {
 			public void customizeToolbar(final ToolbarInfo toolbarInfo) {
 
@@ -138,9 +134,8 @@ public class WebViewPluginExtension implements WorkspaceAccessPluginExtension {
 				if (toolbarId.equals("WebViewToolbar")) {
 					List<JComponent> comps = new ArrayList<JComponent>();
 
-					JFXPanel panel = new Toolbar();
+					JFXPanel panel = new Toolbar(pluginWorkspaceAccess);
 
-					// panel.setPreferredSize(new Dimension(300, 45));
 					comps.add(panel);
 
 					toolbarInfo.setComponents(comps.toArray(new JComponent[0]));

@@ -14,69 +14,40 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java-version>1.8</java-version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>MMddHHmm</maven.build.timestamp.format>
 		<oxygen-version>18.0.0</oxygen-version>
 		<plugin-final-name>oxygen-${project.artifactId}</plugin-final-name>
-		<addon-location>https://raw.githubusercontent.com/claudius108/oxygen-addons/master/${plugin-final-name}/${plugin-final-name}.jar</addon-location>
+		<addon-location>https://raw.githubusercontent.com/claudius108/releases/master/${plugin-final-name}/${plugin-final-name}.jar</addon-location>
 		<github.global.server>github</github.global.server>
 	</properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>com.oxygenxml</groupId>
-			<artifactId>oxygen</artifactId>
-			<version>${oxygen-version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.14</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>1.3.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>javafx</artifactId>
-			<version>8.0_72</version>
-			<systemPath>${java.home}/lib/ext/jfxrt.jar</systemPath>
-			<scope>system</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.controlsfx</groupId>
-			<artifactId>controlsfx</artifactId>
-			<version>8.40.10</version>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
+	<repositories>
+		<repository>
+			<id>oxygen-sdk</id>
+			<name>oXygen public artifacts</name>
+			<url>http://www.oxygenxml.com/maven</url>
+			<layout>default</layout>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.3</version>
-					<configuration>
-						<source>${java-version}</source>
-						<target>${java-version}</target>
-					</configuration>
-				</plugin>
-				<plugin>
 					<artifactId>maven-resources-plugin</artifactId>
 					<version>2.7</version>
-				</plugin>
-				<plugin>
-					<groupId>com.github.github</groupId>
-					<artifactId>site-maven-plugin</artifactId>
-					<version>0.12</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -241,6 +212,7 @@
 					<plugin>
 						<groupId>com.github.github</groupId>
 						<artifactId>site-maven-plugin</artifactId>
+						<version>0.12</version>
 						<executions>
 							<execution>
 								<goals>
@@ -259,7 +231,7 @@
 								<include>${plugin-final-name}.jar</include>
 								<include>addon.xml</include>
 							</includes>
-							<repositoryName>oxygen-addons</repositoryName>
+							<repositoryName>releases</repositoryName>
 							<repositoryOwner>claudius108</repositoryOwner>
 							<path>${plugin-final-name}</path>
 						</configuration>
@@ -268,5 +240,39 @@
 			</build>
 		</profile>
 	</profiles>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.oxygenxml</groupId>
+			<artifactId>oxygen</artifactId>
+			<version>${oxygen-version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.3.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>javafx</artifactId>
+			<version>8.0_72</version>
+			<systemPath>${java.home}/lib/ext/jfxrt.jar</systemPath>
+			<scope>system</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.controlsfx</groupId>
+			<artifactId>controlsfx</artifactId>
+			<version>8.40.10</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
 
 </project>
